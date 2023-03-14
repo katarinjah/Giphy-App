@@ -5,15 +5,12 @@ export const Container = () => {
     const [searchInput, setSearchInput] = useState("");
     const [gifs, setGifs] = useState([]);
 
-    const fetchGifs = (query) => {
+    const fetchGifs = async (query) => {
         const apiKey = "bLS2gJF6VVc2vKqvA49G176qixlOEWLf"
         const url = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${query}`;
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            setGifs(data.data)
-        })
-        .catch(error => console.log(error));
+        const response = await fetch(url);
+        const data = await response.json();
+        setGifs(data.data);
     };
 
     const onSearchHandler = (event) => {
