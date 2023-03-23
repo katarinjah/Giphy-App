@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Container.css';
 
 export const Container = () => {
@@ -14,16 +14,14 @@ export const Container = () => {
     };
 
     const onSearchHandler = (event) => {
-        if (event.key === "Enter") {
-            fetchGifs(searchInput);
-            setSearchInput("");
-        };
+        setSearchInput(event.target.value);
     };
     
     useEffect(() => {
         if (searchInput) {
             fetchGifs(searchInput);
         };
+        return;
     }, [searchInput]);
 
     return (
@@ -33,17 +31,16 @@ export const Container = () => {
                 <input
                 type="text"
                 value={searchInput}
-                onChange={event => setSearchInput(event.target.value)}
-                onKeyDown={onSearchHandler}
+                onChange={onSearchHandler}
                 />
             </div>
             <div className="grid-container">
                 {gifs.map((gif) => (
-                    <div className="grid-item">
-                        <img key={gif.id} src={gif.images.downsized.url} alt={gif.title} />
+                    <div className="grid-item" key={gif.id}>
+                        <img src={gif.images.downsized.url} alt={gif.title} />
                     </div>
                 ))}
             </div>
         </>
     );
-}
+};
